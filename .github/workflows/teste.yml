@@ -1,24 +1,23 @@
-name: Teste CI
+name: Deploy Automático
 
 on:
   push:
     branches: [ "main" ]
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Configurar Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.x"
+      - name: Instalar dependências (opcional)
+        run: |
+          echo "Nenhuma dependência necessária para HTML puro"
 
-      - name: Executar script
-        run: python main.py
-      - name: Instalar dependências
-        run: pip install pytest
-      - name: Executar testes
-        run: pytest -v
+      - name: Publicar no GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
